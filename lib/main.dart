@@ -1,11 +1,33 @@
 import 'package:flutter/material.dart';
+import 'drawer.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class Budget {
+  const Budget(this.title, this.amount, this.type);
+
+  final String title;
+  final int amount;
+  final String type;
+}
+
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final List<Budget> budgetList = [];
+
+  void addBudget(Budget budget) {
+    setState(() {
+      budgetList.add(budget);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,15 +36,24 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Program Counter'),
+      home: MyHomePage(
+        budgetList: budgetList,
+        addBudget: addBudget,
+      ),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({
+    super.key,
+    required this.budgetList,
+    required this.addBudget
+  });
 
-  final String title;
+  final String title = 'Program Counter';
+  final List<Budget> budgetList;
+  final Function(Budget) addBudget;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -47,7 +78,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _checkCounter() {
-    _counterIsZero = _counter == 0 ? true : false;
+    setState(() {
+      _counterIsZero = _counter == 0 ? true : false;
+    });
   }
 
   Text _showOddOrEvenText() {
@@ -72,6 +105,11 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
 
+      drawer: MyDrawer(
+        budgetList: widget.budgetList,
+        addBudget: widget.addBudget,
+      ),
+
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -94,12 +132,14 @@ class _MyHomePageState extends State<MyHomePage> {
             Visibility(
               visible: !_counterIsZero,
               child: FloatingActionButton(
+                heroTag: null,
                 onPressed: _decrementCounter,
                 tooltip: 'Decrement',
                 child: const Icon(Icons.remove),
               ),
             ),
             FloatingActionButton(
+              heroTag: null,
               onPressed: _incrementCounter,
               tooltip: 'Increment',
               child: const Icon(Icons.add),
