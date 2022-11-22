@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'drawer.dart';
-import 'main.dart';
+import '../main.dart';
 
 class MyDataPage extends StatelessWidget {
   const MyDataPage({

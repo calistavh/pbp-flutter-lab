@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'main.dart';
+import '../main.dart';
 import 'drawer.dart';
 
 class MyFormPage extends StatefulWidget {
@@ -146,7 +146,7 @@ class _MyFormPageState extends State<MyFormPage> {
                           formAmount,
                           formType!
                         ));
-                      };
+                      }
                     },
                     child: const Text(
                       'Simpan',

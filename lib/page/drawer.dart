@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'main.dart';
+import '../main.dart';
 import 'form.dart';
 import 'data.dart';
+import 'mywatchlist_page.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({
@@ -63,6 +64,22 @@ class MyDrawer extends StatelessWidget {
               );
             },
           ),
+
+          ListTile(
+            title: const Text('My Watch List'),
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyWatchlistPage(
+                    budgetList: budgetList,
+                    addBudget: addBudget,
+                  ),
+                ),
+              );
+            },
+          ),
+
         ],
       ),
     );
